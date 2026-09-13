@@ -34,15 +34,15 @@ def common_par(text):
         else:
             pars[(text[i],text[i+1])] = 1
 
-    common_pars[len(common_pars)+256] =  max(pars, key=pars.get)
+    common_pars[max(pars, key=pars.get)] = len(common_pars)+256
 
 def merge(text):
     not_merged = True
     while not_merged:
         not_merged = False
-        for i in range(len(text)-1):
-            if (text[i],text[i+1]) in common_pars:
-                text[i:i+2] = [common_pars[(text[i],text[i+1])]] 
+        for i in range(len(text)):
+            if (text[i-1], text[i]) in common_pars:
+                text[i-1:i+1] = [common_pars[(text[i-1], text[i])]] 
                 not_merged = True
     return text
 
@@ -60,8 +60,19 @@ def decode(text):
                  
     return bytes(new_text).decode('utf-8')
 
-def train(text,target_vocab):
+def embed():
     print("hi")
+
+def train(text,target_vocab):
+    temp_text = encode(text)
+    for i in range(target_vocab-256):
+        common_par(temp_text)
+        temp_text = merge(temp_text)
+
+print(len(encode(text)))
+train(text,265)
+print(common_pars)
+print(len(merge(encode(text))))
 
 '''
 del current_segment
