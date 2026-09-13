@@ -30,6 +30,10 @@ try:
 except FileNotFoundError:
     HAS_SAVED_DATA = False
 
+# Temperary 
+HAS_SAVED_DATA = False
+
+'''
 def spiral_data(points, classes):
     X = np.zeros((points * classes, 2))
     y = np.zeros(points * classes, dtype='uint8')
@@ -40,7 +44,16 @@ def spiral_data(points, classes):
         X[ix] = np.c_[r * np.sin(t * 2.5), r * np.cos(t * 2.5)]
         y[ix] = class_number
     return X, y
+'''
 
+section = 1
+
+def next_text(section):
+    enc_text = pt.merge(pt.encode(text))
+    return pt.embed((enc_text[:section-1],enc_text[section]))
+
+X,y = next_text(section)
+    
 class Layer_D:
     def __init__(self, n_ins, n_neurons, name):
         self.name = name
@@ -115,7 +128,9 @@ def backward_pass(X, y, layer_1, layer_2, layer_3, layer_4):
     layer_1.dweights = np.dot(X.T, dinputs)
     layer_1.dbiases = np.sum(dinputs, axis=0, keepdims=True)
 
+'''
 X, y = spiral_data(number_points, number_class)
+'''
 
 layer_1 = Layer_D(2, 64, "layer_1")
 layer_2 = Layer_D(64, 64, "layer_2")
@@ -137,6 +152,9 @@ best_biases = {}
 
 for epoch in range(epochs + 1):
     forward_pass(X, layer_1, layer_2, layer_3, layer_4)
+
+    section += 1
+    next_text(section)
 
     correct_confidences = layer_4.output[range(len(layer_4.output)), y]
     loss = np.mean(-np.log(np.clip(correct_confidences, 1e-7, 1 - 1e-7)))
@@ -180,6 +198,9 @@ final_accuracy = np.mean(predictions == y)
 print(f"final loss (best run): {final_loss:.4f}")
 print(f"final accuracy (best run): {final_accuracy:.4f}")
 
+output = pt.decode(layer_4.output)
+
+'''
 array_weights = [layer_1.weights, layer_2.weights, layer_3.weights, layer_4.weights]
 array_biases = [layer_1.biases, layer_2.biases, layer_3.biases, layer_4.biases]
 
@@ -188,6 +209,9 @@ np.savez_compressed("/Users/meimozhu/Desktop/code/python/ai/mine/array_weights.n
 
 array_biases_dict = {f'layer_{i}_biases': arr for i, arr in enumerate(array_biases, start=1)}
 np.savez_compressed("/Users/meimozhu/Desktop/code/python/ai/mine/array_biases.npz", **array_biases_dict)
+'''
 
+'''
 del segment
 del current_segment
+'''
