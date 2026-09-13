@@ -1,11 +1,11 @@
 #remember to add special tokens
 
+'''
 import os
 from datasets import load_dataset,DownloadConfig
 import sys
 
-# hf_token = "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"
-hf_token = input("Please enter the hf token:")
+hf_token = "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"
 config = DownloadConfig(token=hf_token)
 
 segment = load_dataset('HuggingFaceFW/fineweb-edu', name='default', split='train', streaming=True, download_config=config)
@@ -13,6 +13,9 @@ segment = load_dataset('HuggingFaceFW/fineweb-edu', name='default', split='train
 current_segment = iter(segment)
 
 text = next(current_segment)['text']
+'''
+
+text = "dewihuihudwhuidqwno dsciobhu cdsio uh dsvio us fo iuas dfigou iogu sogiu dsav iogu adsf odsva "
 
 # not yet implemented
 special_tokens = ["<|ENDOFTEXT|>","<|UNK|>"]
@@ -22,6 +25,8 @@ def encode(text):
 
 pars = {}
 
+common_pars = {}
+
 def common_par(text):
     for i in range(len(text)-1):
         if (text[i],text[i+1]) in pars:
@@ -29,9 +34,7 @@ def common_par(text):
         else:
             pars[(text[i],text[i+1])] = 1
 
-    return max(pars, key=pars.get)
-
-common_pars = {}
+    common_pars[len(common_pars)+255] =  max(pars, key=pars.get)
 
 def merge(text):
     not_merged = True
@@ -60,5 +63,7 @@ def decode(text):
 def train(text,target_vocab):
     print("hi")
 
+'''
 del current_segment
 del segment
+'''
