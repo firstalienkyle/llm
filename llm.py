@@ -1,5 +1,5 @@
 import numpy as np
-import personal_tokenizer as pt
+import ttokenizer as pt
 
 '''
 hf_token = input("Please enter the hf token:")
