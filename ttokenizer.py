@@ -5,7 +5,7 @@ import os
 from datasets import load_dataset,DownloadConfig
 import sys
 
-hf_token = "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"
+hf_token = input("poop")
 config = DownloadConfig(token=hf_token)
 
 segment = load_dataset('HuggingFaceFW/fineweb-edu', name='default', split='train', streaming=True, download_config=config)
