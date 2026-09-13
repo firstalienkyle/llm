@@ -34,7 +34,7 @@ def common_par(text):
         else:
             pars[(text[i],text[i+1])] = 1
 
-    common_pars[len(common_pars)+255] =  max(pars, key=pars.get)
+    common_pars[len(common_pars)+256] =  max(pars, key=pars.get)
 
 def merge(text):
     not_merged = True
