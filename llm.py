@@ -1,23 +1,17 @@
 import numpy as np
 import personal_tokenizer as pt
 
-
-
-
-
-np.random.seed(100)
-
-
-
-
-
 '''
-os.environ["HF_TOKEN"] = "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"
-segment = load_dataset('HuggingFaceFW/fineweb', split='train', streaming=True, token=os.environ["HF_TOKEN"])
+hf_token = input("Please enter the hf token:")
+config = DownloadConfig(token=hf_token)
+
+segment = load_dataset('HuggingFaceFW/fineweb-edu', name='default', split='train', streaming=True, download_config=config)
+
+current_segment = iter(segment)
+text = next(current_segment)
 '''
 
-
-
+text ="The 2008 Scottish Labour Party leadership election was an internal party election to choose a new leader of the Labour Party in the Scottish Parliament, and was triggered following the resignation of Wendy Alexander following a row over donations to her own leadership campaign in 2007.[1] Iain Gray won the contest and was announced as leader on 13 September 2008.It was the second Scottish Labour leadership election in as many years, the first being caused by the resignation of Jack McConnell,[2] following the Scottish National Party's victory over Labour in the 2007 Scottish Parliament election, however in this election, Alexander was unopposed, meaning that no ballot actually took place.[3]The timetable for the election was finalised on Monday 28 July, having been put on hold for a month to allow the party to focus on the Glasgow East by-election,[4] which ultimately saw the Scottish National Party overturn a 13,507 Labour majority to gain the seat.[5] Nominations closed at noon on Friday 1 August with the result being declared on Saturday 13 September.A deputy leadership election was held alongside the leadership election following the resignation of Cathy Jamieson on 28 July. Johann Lamont was elected deputy leader."
 
 epochs = 1000
 
@@ -28,17 +22,6 @@ layers = 4
 layer_size = 64
 inputs = 2
 outputs = number_class
-
-
-
-
-'''
-def next_segment():
-    current_segment = next(iter(segment))
-'''
-
-
-
 
 try:
     weights_archive = np.load("/Users/meimozhu/Desktop/code/python/ai/mine/array_weights.npz")
@@ -205,3 +188,6 @@ np.savez_compressed("/Users/meimozhu/Desktop/code/python/ai/mine/array_weights.n
 
 array_biases_dict = {f'layer_{i}_biases': arr for i, arr in enumerate(array_biases, start=1)}
 np.savez_compressed("/Users/meimozhu/Desktop/code/python/ai/mine/array_biases.npz", **array_biases_dict)
+
+del segment
+del current_segment
