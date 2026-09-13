@@ -40,10 +40,15 @@ def merge(text):
     not_merged = True
     while not_merged:
         not_merged = False
-        for i in range(len(text)):
-            if (text[i-1], text[i]) in common_pars:
-                text[i-1:i+1] = [common_pars[(text[i-1], text[i])]] 
-                not_merged = True
+        i = 0
+        while True:
+            try:
+                if (text[i], text[i+1]) in common_pars:
+                    text[i:i+2] = [common_pars[(text[i], text[i+1])]] 
+                    not_merged = True
+                i += 1
+            except IndexError:
+                break
     return text
 
 def decode(text):
